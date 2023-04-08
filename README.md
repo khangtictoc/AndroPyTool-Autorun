@@ -9,7 +9,7 @@ As you know, [AndroPyTool](https://github.com/alexMyG/AndroPyTool) made by [alex
 
 This script will help you: 
 - Skip the analysing file if the extracting process is failed
-- Check whether VirusTotal API Key limit is still available. If yes, you should add a new key. (There is a default key in this script)
+- Check whether VirusTotal API Key limit is still available. If that key have reached the quota, you have to add a new key for continual process. (There is a default key in this script). You should always monitor and be aware of the remaining available requests
 - By default, the script will execute with `-all` and `-vt` option for fully extracting
 - Print out the number of files successfully extracted and the failures.
 
