@@ -19,7 +19,6 @@ Help()
    echo "Parameters:"
    echo "SOURCE_FILE     	Folder contains APK files"
    echo "DESTINATION_FILE	Folder stores our output"
-   echo "TEMP_FILE		Folder for processing. This one is not stable, only for running this script, nothing more"
    echo "-h    			Print this Help."
    echo "Note1: You have running the script as root if your 'docker' is used with administrative privilege"
    echo "Note2: You should specify ABSOLUTE path for properly executing"
