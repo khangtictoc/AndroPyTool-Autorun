@@ -17,7 +17,7 @@ This script will help you:
 
 Warnings: If you install docker with root privilege, you should use `sudo` when running this script.
 ```
-./AndroPy_autorun.sh [SRC_DIR] [DES_DIR] [TEMP_DIR]
+./AndroPy_autorun.sh [SRC_DIR] [DES_DIR]
 ```
 
 Use `-h` for more information.
