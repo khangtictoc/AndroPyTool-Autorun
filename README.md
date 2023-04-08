@@ -22,6 +22,5 @@ Warnings: If you install docker with root privilege, you should use `sudo` when 
 
 Use `-h` for more information.
 
-- `[TEMP_DIR]` is whatever folder you want
 - `[SRC_DIR]`: where apk files stored
 - `[DES_DIR]`: where you store you results
