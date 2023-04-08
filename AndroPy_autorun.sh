@@ -3,7 +3,7 @@
 # Store the path to the directory in a variable
 src_folder=$1
 des_folder=$2
-temp_path=$3
+temp_path=$HOME/Test_apk
 
 # Global variable
 NUM_FILE_SUCCESS=0
@@ -14,7 +14,7 @@ NUM_FILE_SUCCESS=0
 Help()
 {
    # Display Help
-   echo "Usage: AndroPy_autorun [SOURCE_FILE] [DESTINATION_FILE] [TEMP_FILE]"
+   echo "Usage: AndroPy_autorun [SOURCE_FILE] [DESTINATION_FILE]"
    echo
    echo "Parameters:"
    echo "SOURCE_FILE     	Folder contains APK files"
@@ -79,6 +79,11 @@ checkQuotasVT()
 
 ################### MAIN FUNCTION ###################
 
+# Pre-run: Installing required packages
+
+apt install bc 
+apt install jq
+
 # Get the options (if it has)
 while getopts ":h" option; do
    case $option in
@@ -95,7 +100,7 @@ done
 
 # Pre-check
 # Check whether 3 needed parameters exist?
-if [[ -z $1 || -z $2 || -z $3 ]] 
+if [[ -z $1 || -z $2  ]] 
 then
   echo "Not enought parameters. Please check HELP"
   Help
@@ -167,7 +172,9 @@ fi
 if [[ -d "$temp_path" ]] 
 then
   echo "TEMP folder found!!!"
-  rm -dRf  $temp_path/*
+  rm -dRf  "$temp_path"/*
+  mkdir -p "$temp_path"
+  echo ">>>>>>>> Create TEMP folder successfully !!!"
 else
   mkdir -p "$temp_path"
   echo ">>>>>>>> Create TEMP folder successfully !!!"
@@ -175,16 +182,16 @@ fi
 
 # Make folder for destination path
 
-mkdir -p $des_folder/DroidBox_outputs/
-mkdir -p $des_folder/Dynamic/Droidbox/
-mkdir -p $des_folder/Dynamic/Strace/
-mkdir -p $des_folder/Features_files/
-mkdir -p $des_folder/FlowDroid_outputs/
-mkdir -p $des_folder/FlowDroid_processed/
-mkdir -p $des_folder/samples/BW/
-mkdir -p $des_folder/samples/MW/
-mkdir -p $des_folder/invalid_apks/
-mkdir -p $des_folder/VT_analysis/
+mkdir -p "$des_folder"/DroidBox_outputs/
+mkdir -p "$des_folder"/Dynamic/Droidbox/
+mkdir -p "$des_folder"/Dynamic/Strace/
+mkdir -p "$des_folder"/Features_files/
+mkdir -p "$des_folder"/FlowDroid_outputs/
+mkdir -p "$des_folder"/FlowDroid_processed/
+mkdir -p "$des_folder"/samples/BW/
+mkdir -p "$des_folder"/samples/MW/
+mkdir -p "$des_folder"/invalid_apks/
+mkdir -p "$des_folder"/VT_analysis/
 
 
 # Loop from 0 to the length of the array
@@ -200,7 +207,7 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
   # Remove all output and start new files
   echo "REMOVING ALL OUTPUT (IF TRUE)..."
 
-  rm -dRf  $temp_path/*
+  rm -dRf  "$temp_path"/*
   
   cp "${files[i]}" "$temp_path"
   
@@ -222,16 +229,16 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
     # If successful, save the result to destination folder
     
       echo "${files[i]}: SUCCESSFUL !!!" >> "$file_log"
-      cp -f $temp_path/DroidBox_outputs/* $des_folder/DroidBox_outputs/
-      cp -f $temp_path/Dynamic/Droidbox/* $des_folder/Dynamic/Droidbox/
-      cp -f $temp_path/Dynamic/Strace/* $des_folder/Dynamic/Strace/
-      cp -f $temp_path/Features_files/* $des_folder/Features_files/
-      cp -f $temp_path/FlowDroid_outputs/* $des_folder/FlowDroid_outputs/
-      cp -f $temp_path/FlowDroid_processed/* $des_folder/FlowDroid_processed/
-      cp -f $temp_path/VT_analysis/* $des_folder/VT_analysis/
-      cp -f $temp_path/samples/BW/* $des_folder/samples/BW/
-      cp -f $temp_path/samples/MW/* $des_folder/samples/MW/
-      cp -f $temp_path/invalid_apks/* $des_folder/invalid_apks/  
+      cp -f "$temp_path"/DroidBox_outputs/* "$des_folder"/DroidBox_outputs/
+      cp -f "$temp_path"/Dynamic/Droidbox/* "$des_folder"/Dynamic/Droidbox/
+      cp -f "$temp_path"/Dynamic/Strace/* "$des_folder"/Dynamic/Strace/
+      cp -f "$temp_path"/Features_files/* "$des_folder"/Features_files/
+      cp -f "$temp_path"/FlowDroid_outputs/* "$des_folder"/FlowDroid_outputs/
+      cp -f "$temp_path"/FlowDroid_processed/* "$des_folder"/FlowDroid_processed/
+      cp -f "$temp_path"/VT_analysis/* "$des_folder"/VT_analysis/
+      cp -f "$temp_path"/samples/BW/* "$des_folder"/samples/BW/
+      cp -f "$temp_path"/samples/MW/* "$des_folder"/samples/MW/
+      cp -f "$temp_path"/invalid_apks/* "$des_folder"/invalid_apks/  
       NUM_FILE_SUCCESS=$(($NUM_FILE_SUCCESS+1))
     fi
   else
@@ -243,9 +250,11 @@ done
 
 # Report to LOG file
 
+NUM_FILE_FAIL=$((${#files[@]} - $NUM_FILE_SUCCESS))
+SUCCESS_PERCENT=$(($NUM_FILE_SUCCESS / ${#files[@]}))
 
 echo -e "\n\n" >> "$file_log" 
-echo "Number of file successed: $NUM_FILE_SUCCESS" >> "$file_log" 
-echo "Number of file failed: $((${#files[@]} - $NUM_FILE_SUCCESS))" >> "$file_log" 
+echo "Number of file successed: $NUM_FILE_SUCCESS ($SUCCESS_PERCENT%)" >> "$file_log" 
+echo "Number of file failed: $NUM_FILE_FAIL ($((100 - $SUCCESS_PERCENT))%)" >> "$file_log" 
 
 echo "============== FINISH EVALUATE ================"
