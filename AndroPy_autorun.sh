@@ -17,9 +17,11 @@ Help()
    echo "Usage: AndroPy_autorun [SOURCE_FILE] [DESTINATION_FILE]"
    echo
    echo "Parameters:"
+   echo "---"
    echo "SOURCE_FILE     	Folder contains APK files"
    echo "DESTINATION_FILE	Folder stores our output"
    echo "-h    			Print this Help."
+   echo
    echo "Note1: You have running the script as root if your 'docker' is used with administrative privilege"
    echo "Note2: You should specify ABSOLUTE path for properly executing"
    echo "Note3: No trailing slash '/' when specifying PATH"
