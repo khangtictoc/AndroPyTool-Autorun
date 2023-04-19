@@ -84,6 +84,7 @@ checkQuotasVT()
 
 apt install bc 
 apt install jq
+apt install docker.io
 
 # Get the options (if it has)
 while getopts ":h" option; do
