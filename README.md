@@ -1,6 +1,10 @@
 ## `AndroPy_autorun.sh`
 
-Context: 
+> Tested on Kali Linux & Ubuntu.
+
+> There are a default `apt install docker.io`, but you should install docker manually before running the script if it is not available.
+
+### Context: 
 
 As you know, [AndroPyTool](https://github.com/alexMyG/AndroPyTool) made by [alexMyG](https://github.com/alexMyG/AndroPyTool/commits?author=alexMyG) is a "GOAT" for extracting features from APK files, extraction are processed in both **static** and **dynamic** method, including report from other sources like **VirusTotal**. 
 - Also, we encounter problem with VirusTotal API requests quotas and other trivia things relating to running tool by docker container
