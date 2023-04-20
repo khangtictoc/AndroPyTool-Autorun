@@ -2,7 +2,7 @@
 
 > Tested on Kali Linux & Ubuntu.
 
-> There are a default `apt install docker.io`, but you should install docker manually before running the script if it is not available.
+> There is a default installation for docker with `apt install docker.io`. But if it did not work, you should install docker manually before running the script if it is not available.
 
 ### Context: 
 
