@@ -82,9 +82,9 @@ checkQuotasVT()
 
 # Pre-run: Installing required packages
 
-apt install bc 
-apt install jq
-apt install docker.io
+apt install -y bc 
+apt install -y jq
+apt install -y docker.io
 
 # Get the options (if it has)
 while getopts ":h" option; do
