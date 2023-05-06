@@ -28,3 +28,17 @@ Use `-h` for more information.
 
 - `[SRC_DIR]`: where apk files stored
 - `[DES_DIR]`: where you store you results
+
+### Some problems ?
+
+Sometimes, you may encounter this endless loop prevents you achieve the result
+
+<p align="center"> 
+    <img src="images/device_boot_null.png">
+</p>
+
+Then you just `Ctr + C` (Windows & Unix-based) **once** or using anything to send a **SIGINT** signal, which cancels or terminates the currently-running program. After that, the extracting process would be on track again. 
+
+Just **once** guys, if you keep doing then, you would stop the whole process. 
+
+And remember to frequently keep track of whether this problem may be appear.
