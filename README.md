@@ -29,16 +29,22 @@ Use `-h` for more information.
 - `[SRC_DIR]`: where apk files stored
 - `[DES_DIR]`: where you store you results
 
-### Some problems ?
+### Something worth noting ?
 
-Sometimes, you may encounter this endless loop prevents you achieve the result
+1. Sometimes, you may encounter this endless loop prevents you achieve the result
 
 <p align="center"> 
     <img src="images/device_boot_null.png">
 </p>
+
+> Reason: This is sometimes due to that APK files. Somes times because of **full memory** or **full disk**. Check it with `free -h` and `df -h`
 
 Then you just `Ctr + C` (Windows & Unix-based) **once** or using anything to send a **SIGINT** signal, which cancels or terminates the currently-running program. After that, the extracting process would be on track again. 
 
 Just **once** guys, if you keep doing then, you would stop the whole process. 
 
 And remember to frequently keep track of whether this problem may be appear.
+
+2. When you run long enough at once, you may experience low performance. 
+
+My suggestion is splitting the current folder containing APK files into smaller ones. Refer to [Split Folder](https://github.com/khangtictoc/Android_malware_classification/blob/main/scripts/split-folder.py) or any tools suit to you
