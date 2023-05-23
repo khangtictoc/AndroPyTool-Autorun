@@ -157,10 +157,10 @@ else
 fi
 
 
-file_log="$des_folder/status_checker_$(date +'%Y-%m-%d_%H:%M:%S').log"
+file_log="$des_folder/log_$(date +'%Y-%m-%d_%H:%M:%S').log"
 
 # Add an output checker file
-if [[ -e "$des_folder/status_checker_$(date +'%Y-%m-%d_%H:%M:%S').log" ]]
+if [[ -e "$des_folder/log_$(date +'%Y-%m-%d_%H:%M:%S').log" ]]
 then
   initLog
 else
