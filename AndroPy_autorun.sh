@@ -82,6 +82,8 @@ checkQuotasVT()
 
 # Pre-run: Installing required packages
 
+apt install curl 
+apt install net-tools
 apt install -y bc 
 apt install -y jq
 apt install -y docker.io
