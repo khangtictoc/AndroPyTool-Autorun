@@ -80,13 +80,7 @@ checkQuotasVT()
 
 ################### MAIN FUNCTION ###################
 
-# Pre-run: Installing required packages
 
-apt install -y curl 
-apt install -y net-tools
-apt install -y bc 
-apt install -y jq
-apt install -y docker.io
 
 # Get the options (if it has)
 while getopts ":h" option; do
