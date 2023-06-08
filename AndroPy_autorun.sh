@@ -31,12 +31,12 @@ Help()
 ## File intro
 initLog()
 {
-  su - u $user_role -c 'echo "///////////////////////////////////////////////////////////////" > "$file_log"'
-  su - u $user_role -c 'echo "//////////////// FILE ANALYSIS PROCESS CHECKER ////////////////" >> "$file_log"'
-  su - u $user_role -c 'echo -e "///////////////////////////////////////////////////////////////\n\n" >> "$file_log"'
-  su - u $user_role -c 'echo "WORKING DIRECTORY: $src_folder" >> "$file_log"'
-  su - u $user_role -c 'echo "OUTPUT DIRECTORY: $des_folder" >> "$file_log"'
-  su - u $user_role -c 'echo -e "\n\n" >> "$file_log"'
+  su - $user_role -c 'echo "///////////////////////////////////////////////////////////////" > "$file_log"'
+  su - $user_role -c 'echo "//////////////// FILE ANALYSIS PROCESS CHECKER ////////////////" >> "$file_log"'
+  su - $user_role -c 'echo -e "///////////////////////////////////////////////////////////////\n\n" >> "$file_log"'
+  su - $user_role -c 'echo "WORKING DIRECTORY: $src_folder" >> "$file_log"'
+  su - $user_role -c 'echo "OUTPUT DIRECTORY: $des_folder" >> "$file_log"'
+  su - $user_role -c 'echo -e "\n\n" >> "$file_log"'
 }
 
 ## Check VirusTotal API Status
@@ -113,10 +113,13 @@ echo "Destination file: ${des_folder^^}"
 
 
 # VIRUS TOTAL key option
-
-echo -e "\n\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+echo
+echo
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 echo "@@ !!! VIRUS TOTAL API KEY ONLY HAS A QUOTAS IN A MINUS/DAY !!! @@"
-echo -e "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n"
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+echo 
+echo
 
 read -p "Use default API key (hardcoded) [YES/NO]? " option
 
@@ -149,7 +152,7 @@ if [[ -d "$des_folder" ]]
 then
   echo "Destination folder found!!!"
 else
-  su - u $user_role -c 'mkdir -p "$des_folder"'
+  su - $user_role -c 'mkdir -p "$des_folder"'
   echo ">>>>>>>> Create resulting folder successfully !!!"
 fi
 
@@ -172,25 +175,25 @@ if [[ -d "$temp_path" ]]
 then
   echo "TEMP folder found!!!"
   rm -dRf  "$temp_path"/*
-  su - u $user_role -c 'mkdir -p "$temp_path"'
+  su - $user_role -c 'mkdir -p "$temp_path"'
   echo ">>>>>>>> Create TEMP folder successfully !!!"
 else
-  su - u $user_role -c 'mkdir -p "$temp_path"'
+  su - $user_role -c 'mkdir -p "$temp_path"'
   echo ">>>>>>>> Create TEMP folder successfully !!!"
 fi
 
 # Make folder for destination path
 
-su - u $user_role -c 'mkdir -p "$des_folder"/DroidBox_outputs/'
-su - u $user_role -c 'mkdir -p "$des_folder"/Dynamic/Droidbox/'
-su - u $user_role -c 'mkdir -p "$des_folder"/Dynamic/Strace/'
-su - u $user_role -c 'mkdir -p "$des_folder"/Features_files/'
-su - u $user_role -c 'mkdir -p "$des_folder"/FlowDroid_outputs/'
-su - u $user_role -c 'mkdir -p "$des_folder"/FlowDroid_processed/'
-su - u $user_role -c 'mkdir -p "$des_folder"/samples/BW/'
-su - u $user_role -c 'mkdir -p "$des_folder"/samples/MW/'
-su - u $user_role -c 'mkdir -p "$des_folder"/invalid_apks/'
-su - u $user_role -c 'mkdir -p "$des_folder"/VT_analysis/'
+su - $user_role -c 'mkdir -p "$des_folder"/DroidBox_outputs/'
+su - $user_role -c 'mkdir -p "$des_folder"/Dynamic/Droidbox/'
+su - $user_role -c 'mkdir -p "$des_folder"/Dynamic/Strace/'
+su - $user_role -c 'mkdir -p "$des_folder"/Features_files/'
+su - $user_role -c 'mkdir -p "$des_folder"/FlowDroid_outputs/'
+su - $user_role -c 'mkdir -p "$des_folder"/FlowDroid_processed/'
+su - $user_role -c 'mkdir -p "$des_folder"/samples/BW/'
+su - $user_role -c 'mkdir -p "$des_folder"/samples/MW/'
+su - $user_role -c 'mkdir -p "$des_folder"/invalid_apks/'
+su - $user_role -c 'mkdir -p "$des_folder"/VT_analysis/'
 
 
 # Loop from 0 to the length of the array
@@ -208,7 +211,7 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
 
   rm -dRf  "$temp_path"/*
   
-  su - u $user_role -c 'cp "${files[i]}" "$temp_path"'
+  su - $user_role -c 'cp "${files[i]}" "$temp_path"'
   
   # Check VirusTotal API_KEY Quotas
   checkQuotasVT $vt_api_key
@@ -222,26 +225,26 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
   then
     if [[ -z $(ls -A "$temp_path/DroidBox_outputs") || -z $(ls -A "$temp_path/Dynamic") || -z $(ls -A "$temp_path/Features_files") || -z $(ls -A "$temp_path/FlowDroid_outputs") || -z $(ls -A "$temp_path/FlowDroid_processed") || -z $(ls -A "$temp_path/VT_analysis") ]]
     then 
-      su - u $user_role -c 'echo "${files[i]}: FAILED - Empty folder detected !!!" >> "$file_log"'
+      su - $user_role -c 'echo "${files[i]}: FAILED - Empty folder detected !!!" >> "$file_log"'
     else
     
     # If successful, save the result to destination folder
     
-      su - u $user_role -c 'echo "${files[i]}: SUCCESSFUL !!!" >> "$file_log"'
-      su - u $user_role -c 'cp -f "$temp_path"/DroidBox_outputs/* "$des_folder"/DroidBox_outputs/'
-      su - u $user_role -c 'cp -f "$temp_path"/Dynamic/Droidbox/* "$des_folder"/Dynamic/Droidbox/'
-      su - u $user_role -c 'cp -f "$temp_path"/Dynamic/Strace/* "$des_folder"/Dynamic/Strace/'
-      su - u $user_role -c 'cp -f "$temp_path"/Features_files/* "$des_folder"/Features_files/'
-      su - u $user_role -c 'cp -f "$temp_path"/FlowDroid_outputs/* "$des_folder"/FlowDroid_outputs/'
-      su - u $user_role -c 'cp -f "$temp_path"/FlowDroid_processed/* "$des_folder"/FlowDroid_processed/'
-      su - u $user_role -c 'cp -f "$temp_path"/VT_analysis/* "$des_folder"/VT_analysis/'
-      su - u $user_role -c 'cp -f "$temp_path"/samples/BW/* "$des_folder"/samples/BW/'
-      su - u $user_role -c 'cp -f "$temp_path"/samples/MW/* "$des_folder"/samples/MW/'
-      su - u $user_role -c 'cp -f "$temp_path"/invalid_apks/* "$des_folder"/invalid_apks/'
+      su - $user_role -c 'echo "${files[i]}: SUCCESSFUL !!!" >> "$file_log"'
+      su - $user_role -c 'cp -f "$temp_path"/DroidBox_outputs/* "$des_folder"/DroidBox_outputs/'
+      su - $user_role -c 'cp -f "$temp_path"/Dynamic/Droidbox/* "$des_folder"/Dynamic/Droidbox/'
+      su - $user_role -c 'cp -f "$temp_path"/Dynamic/Strace/* "$des_folder"/Dynamic/Strace/'
+      su - $user_role -c 'cp -f "$temp_path"/Features_files/* "$des_folder"/Features_files/'
+      su - $user_role -c 'cp -f "$temp_path"/FlowDroid_outputs/* "$des_folder"/FlowDroid_outputs/'
+      su - $user_role -c 'cp -f "$temp_path"/FlowDroid_processed/* "$des_folder"/FlowDroid_processed/'
+      su - $user_role -c 'cp -f "$temp_path"/VT_analysis/* "$des_folder"/VT_analysis/'
+      su - $user_role -c 'cp -f "$temp_path"/samples/BW/* "$des_folder"/samples/BW/'
+      su - $user_role -c 'cp -f "$temp_path"/samples/MW/* "$des_folder"/samples/MW/'
+      su - $user_role -c 'cp -f "$temp_path"/invalid_apks/* "$des_folder"/invalid_apks/'
       NUM_FILE_SUCCESS=$(($NUM_FILE_SUCCESS+1))
     fi
   else
-    su - u $user_role -c 'echo "${files[i]}: FAILED - No folder detected !!!" >> "$file_log"'
+    su - $user_role -c 'echo "${files[i]}: FAILED - No folder detected !!!" >> "$file_log"'
   fi
    
 
@@ -252,8 +255,8 @@ done
 NUM_FILE_FAIL=$((${#files[@]} - $NUM_FILE_SUCCESS))
 SUCCESS_PERCENT=$(($NUM_FILE_SUCCESS / ${#files[@]}))
 
-su - u $user_role -c 'echo -e "\n\n" >> "$file_log"'
-su - u $user_role -c 'echo "Number of file successed: $NUM_FILE_SUCCESS ($SUCCESS_PERCENT%)" >> "$file_log"'
-su - u $user_role -c 'echo "Number of file failed: $NUM_FILE_FAIL ($((100 - $SUCCESS_PERCENT))%)" >> "$file_log"'
+su - $user_role -c 'echo -e "\n\n" >> "$file_log"'
+su - $user_role -c 'echo "Number of file successed: $NUM_FILE_SUCCESS ($SUCCESS_PERCENT%)" >> "$file_log"'
+su - $user_role -c 'echo "Number of file failed: $NUM_FILE_FAIL ($((100 - $SUCCESS_PERCENT))%)" >> "$file_log"'
 
 echo "============== FINISH EVALUATE ================"
