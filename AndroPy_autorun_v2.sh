@@ -71,14 +71,6 @@ fi
 echo "Source file: ${src_folder^^}"
 echo "Destination file: ${des_folder^^}"
 
-
-
-# VIRUS TOTAL key option
-
-
-vt_api_key="a54d394ab2062917d31a22e60db6c43a3484aeefe423a0a842b49daaece136db"
-
-
 # Use the built-in `readarray` command to store the list of files in an array
 readarray -t files < <(find "$src_folder" -maxdepth 1 -type f)
 
@@ -153,7 +145,7 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
 
   # Start AndroPy
   echo "PROCESSING WITH ANDROPY ... ${file[i]}"
-  docker run --volume=$temp_path:/apks alexmyg/andropytool -s /apks/ -vt $vt_api_key -all
+  docker run --volume=$temp_path:/apks alexmyg/andropytool -s /apks/ -vt a54d394ab2062917d31a22e60db6c43a3484aeefe423a0a842b49daaece136db -all
 
   # Check the condition
   if [[ -d  "$temp_path/DroidBox_outputs" && -d  "$temp_path/Dynamic" && -d  "$temp_path/Features_files" && -d  "$temp_path/FlowDroid_outputs" && -d  "$temp_path/FlowDroid_processed" && -d  "$temp_path/VT_analysis" ]]
