@@ -38,45 +38,7 @@ initLog()
   echo -e "\n\n" >> "$file_log"
 }
 
-## Check VirusTotal API Status
-# Check quotas parameters - limits - remaining requests
 
-checkQuotasVT()
-{
-
- vt_api_key=$1
- user_id=$1
- echo "Checking your current key: $1 ............"
- curl --request GET \
-     --url "https://www.virustotal.com/api/v3/users/$user_id/overall_quotas" \
-     --header "accept: application/json" \
-     --header "x-apikey: $vt_api_key" | jq '.data.api_requests_daily' > vt_api_quotas.txt
-
-  # Show status dialog
-   allowed_req=$(cat vt_api_quotas.txt | jq '.user.allowed')
-   used_req=$(cat vt_api_quotas.txt | jq '.user.used')
-   
-
-   rem_req=$( echo "$allowed_req-$used_req" | bc) 
-   echo "################## VIRUSTOTAL QUOTAS STATUS ##################"
-   echo "Used requests: $used_req"
-   echo "Remaining requests: $rem_req"
-   
-   rm -f vt_api_quotas.txt
-   
-   # Check condition whether to input new API_KEY
-   if [[ $rem_req -eq 0 ]]
-   then
-     read -p "New VirusTotal API key (Make sure enter key with available quotas): " vt_api_key
-     if [[ -z $vt_api_key ]] 
-     then 
-       echo "Your VT key must be valid (Your key's length is 0)"
-       exit 0
-     fi
-   fi
-   echo "Your newly assigned API_KEY: $vt_api_key"
-   
-}
 
 ################### MAIN FUNCTION ###################
 
@@ -188,10 +150,7 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
   rm -dRf  "$temp_path"/*
   
   cp "${files[i]}" "$temp_path"
-  
-  # Check VirusTotal API_KEY Quotas
-  checkQuotasVT $vt_api_key
-  
+
   # Start AndroPy
   echo "PROCESSING WITH ANDROPY ... ${file[i]}"
   docker run --volume=$temp_path:/apks alexmyg/andropytool -s /apks/ -vt $vt_api_key -all
