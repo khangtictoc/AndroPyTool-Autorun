@@ -250,6 +250,10 @@ for i in $(seq 0 $((${#files[@]} - 1))); do
 
 done
 
+# Remove $temp_path
+
+rm -rf "$temp_path"
+
 # Report to LOG file
 
 NUM_FILE_FAIL=$((${#files[@]} - $NUM_FILE_SUCCESS))

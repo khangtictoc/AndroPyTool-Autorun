@@ -29,6 +29,10 @@ Use `-h` for more information.
 - `[SRC_DIR]`: where apk files stored
 - `[DES_DIR]`: where you store you results
 
+`AndroPy_autorun_v2.sh` is executed without any interacting or input 
+
+`test_apks` folder contains APKs for tesing (1 benign and 1 malware)
+
 ### Something worth noting ?
 
 1. Sometimes, you may encounter this endless loop prevents you achieve the result
